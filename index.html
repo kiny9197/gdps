@@ -1,1007 +1,161 @@
-<!DOCTYPE html>
-<html lang="ru">
+<!DOCTYPE html><html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>kinydipy | Лучший приватный сервер Geometry Dash в России</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&family=Orbitron:wght@700&family=Russo+One&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary: #FF3366;
-            --primary-dark: #CC0044;
-            --secondary: #6633FF;
-            --accent: #FF66FF;
-            --neon: #00FFEE;
-            --dark: #0a0a12;
-            --darker: #05050a;
-            --light: #f8f9fa;
-            --gray: #1e1e2a;
-            --success: #00CC88;
-            --warning: #FFAA33;
-            --danger: #FF4444;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: var(--dark);
-            color: var(--light);
-            line-height: 1.7;
-            overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(102, 51, 255, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(255, 102, 255, 0.1) 0%, transparent 20%);
-        }
-
-        /* Анимации */
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        @keyframes neonGlow {
-            0%, 100% { text-shadow: 0 0 5px var(--neon), 0 0 10px var(--neon); }
-            50% { text-shadow: 0 0 10px var(--neon), 0 0 20px var(--neon); }
-        }
-
-        @keyframes shine {
-            to {
-                background-position: 200% center;
-            }
-        }
-
-        /* Шапка */
-        header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            padding: 4rem 0 6rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-            margin-bottom: -80px;
-        }
-
-        .header-content {
-            position: relative;
-            z-index: 2;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        h1 {
-            font-family: 'Russo One', sans-serif;
-            font-size: 4.5rem;
-            font-weight: 900;
-            margin: 0;
-            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
-            background: linear-gradient(to right, #fff, #ddd);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 2px;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 1.5rem;
-        }
-
-        .logo img {
-            height: 100px;
-            width: 100px;
-            object-fit: contain;
-            animation: float 4s ease-in-out infinite;
-            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5));
-        }
-
-        .subtitle {
-            font-size: 1.8rem;
-            opacity: 0.9;
-            margin-bottom: 1.5rem;
-            font-weight: 600;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .stat-item {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-weight: 700;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s ease;
-        }
-
-        .stat-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .stat-item i {
-            font-size: 1.5rem;
-            color: var(--accent);
-        }
-
-        /* Основной контент */
-        .container {
-            max-width: 1200px;
-            margin: 5rem auto;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        section {
-            margin-bottom: 6rem;
-        }
-
-        h2 {
-            font-size: 3rem;
-            margin-bottom: 2rem;
-            color: var(--primary);
-            position: relative;
-            display: inline-block;
-            font-weight: 900;
-            font-family: 'Russo One', sans-serif;
-        }
-
-        h2::after {
-            content: "";
-            position: absolute;
-            bottom: -15px;
-            left: 0;
-            width: 100px;
-            height: 5px;
-            background: var(--accent);
-            border-radius: 3px;
-        }
-
-        h3 {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            color: var(--light);
-        }
-
-        /* Блок с информацией */
-        .server-info {
-            background: linear-gradient(to right, rgba(30, 30, 42, 0.8), rgba(20, 20, 30, 0.9));
-            padding: 3rem;
-            border-radius: 20px;
-            margin-bottom: 4rem;
-            border-left: 5px solid var(--accent);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Особенности */
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-            margin: 4rem 0;
-        }
-
-        .feature {
-            background: linear-gradient(to bottom right, rgba(42, 42, 58, 0.8), rgba(30, 30, 42, 0.9));
-            padding: 2.5rem;
-            border-radius: 15px;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .feature::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 5px;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--accent), var(--secondary));
-            transition: all 0.4s ease;
-            z-index: -1;
-        }
-
-        .feature:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .feature:hover::before {
-            width: 100%;
-            opacity: 0.15;
-        }
-
-        .feature i {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(to right, var(--accent), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .feature h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(to right, var(--light), #ddd);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Галерея топов */
-        .leaderboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin: 4rem 0;
-        }
-
-        .leader {
-            background: linear-gradient(to bottom right, rgba(42, 42, 58, 0.8), rgba(30, 30, 42, 0.9));
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.4s ease;
-            position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .leader:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        }
-
-        .leader-image {
-            height: 300px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .leader-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .leader:hover .leader-image img {
-            transform: scale(1.1);
-        }
-
-        .leader-badge {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: linear-gradient(45deg, #ffd700, #ffcc00);
-            color: #000;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 1.8rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .leader-info {
-            padding: 2rem;
-        }
-
-        .leader-info h3 {
-            font-size: 1.8rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .leader-position {
-            color: var(--accent);
-            font-weight: 700;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .leader-stats {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 1rem;
-        }
-
-        .leader-stat {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .leader-stat i {
-            color: var(--accent);
-        }
-
-        /* Блок с ютубером */
-        .youtuber {
-            background: linear-gradient(to right, rgba(20, 20, 30, 0.9), rgba(30, 30, 42, 0.9));
-            padding: 3rem;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 3rem;
-            margin: 5rem 0;
-            flex-wrap: wrap;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .youtuber-avatar {
-            flex: 0 0 200px;
-        }
-
-        .youtuber-avatar img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid var(--accent);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-            transition: all 0.3s ease;
-        }
-
-        .youtuber:hover .youtuber-avatar img {
-            transform: scale(1.05);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
-        }
-
-        .youtuber-info {
-            flex: 1;
-            min-width: 300px;
-        }
-
-        .youtuber-info h3 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, var(--primary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .youtuber-stats {
-            display: flex;
-            gap: 2rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-        }
-
-        .youtuber-stat {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            font-weight: 700;
-            font-size: 1.1rem;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 0.8rem 1.5rem;
-            border-radius: 50px;
-            backdrop-filter: blur(5px);
-        }
-
-        .youtuber-stat i {
-            font-size: 1.5rem;
-            color: var(--accent);
-        }
-
-        /* Кнопки */
-        .btn-group {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-            margin: 3rem 0;
-        }
-
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-            padding: 1.2rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            font-size: 1.1rem;
-            border: none;
-            cursor: pointer;
-        }
-
-        .btn::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--primary), var(--primary-dark), var(--primary));
-            background-size: 200% auto;
-            z-index: -1;
-            transition: all 0.5s ease;
-        }
-
-        .btn:hover::before {
-            background-position: right center;
-        }
-
-        .btn-primary {
-            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
-            color: white;
-        }
-
-        .btn-secondary {
-            background: linear-gradient(45deg, var(--secondary), var(--accent));
-            color: white;
-        }
-
-        .btn-accent {
-            background: linear-gradient(45deg, var(--accent), #ff4dff);
-            color: white;
-        }
-
-        .btn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
-        }
-
-        .btn i {
-            font-size: 1.3rem;
-        }
-
-        .shine-btn {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .shine-btn::after {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -60%;
-            width: 50%;
-            height: 200%;
-            background: linear-gradient(
-                to right,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.3) 50%,
-                rgba(255, 255, 255, 0) 100%
-            );
-            transform: rotate(30deg);
-            animation: shine 3s infinite;
-        }
-
-        /* Правила */
-        .rules {
-            background: linear-gradient(to bottom right, rgba(20, 20, 30, 0.9), rgba(30, 30, 42, 0.9));
-            padding: 3rem;
-            border-radius: 20px;
-            margin: 4rem 0;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .rules-list {
-            margin-top: 2rem;
-        }
-
-        .rule-item {
-            margin-bottom: 1.5rem;
-            padding-left: 2rem;
-            position: relative;
-        }
-
-        .rule-item::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0.7rem;
-            width: 10px;
-            height: 10px;
-            background: var(--accent);
-            border-radius: 50%;
-        }
-
-        .rule-item h4 {
-            font-size: 1.3rem;
-            margin-bottom: 0.5rem;
-            color: var(--light);
-        }
-
-        /* Футер */
-        footer {
-            background: linear-gradient(to bottom, var(--darker), #000);
-            padding: 5rem 0 3rem;
-            text-align: center;
-            margin-top: 6rem;
-            position: relative;
-            clip-path: polygon(0 30px, 100% 0, 100% 100%, 0 100%);
-        }
-
-        footer::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(to right, transparent, var(--accent), transparent);
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 2rem;
-        }
-
-        .footer-logo img {
-            height: 60px;
-            width: 60px;
-            object-fit: contain;
-        }
-
-        .footer-logo h3 {
-            font-family: 'Russo One', sans-serif;
-            font-size: 2rem;
-            background: linear-gradient(to right, var(--light), #ddd);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 2px;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .social-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(to bottom right, var(--gray), var(--darker));
-            color: var(--light);
-            font-size: 1.8rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .social-link::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg, var(--accent), var(--secondary));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: -1;
-        }
-
-        .social-link:hover {
-            transform: translateY(-5px) scale(1.1);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
-            color: white;
-        }
-
-        .social-link:hover::before {
-            opacity: 1;
-        }
-
-        .copyright {
-            opacity: 0.7;
-            font-size: 0.9rem;
-            margin-top: 3rem;
-        }
-
-        /* Адаптивность */
-        @media (max-width: 992px) {
-            h1 {
-                font-size: 3.5rem;
-            }
-            
-            .subtitle {
-                font-size: 1.5rem;
-            }
-            
-            .feature {
-                padding: 2rem;
-            }
-            
-            .youtuber {
-                padding: 2rem;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.8rem;
-            }
-            
-            h2 {
-                font-size: 2.5rem;
-            }
-            
-            .subtitle {
-                font-size: 1.3rem;
-            }
-            
-            .stats {
-                flex-direction: column;
-                align-items: center;
-                gap: 1rem;
-            }
-            
-            .stat-item {
-                width: 100%;
-                max-width: 300px;
-                justify-content: center;
-            }
-            
-            .container {
-                padding: 0 1.5rem;
-            }
-            
-            .server-info, .rules {
-                padding: 2rem;
-            }
-            
-            .youtuber {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .youtuber-stats {
-                justify-content: center;
-            }
-            
-            .btn-group {
-                flex-direction: column;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            h2 {
-                font-size: 2rem;
-            }
-            
-            .logo img {
-                height: 70px;
-                width: 70px;
-            }
-            
-            .server-info, .rules, .feature {
-                padding: 1.5rem;
-            }
-            
-            .leaderboard {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web3 Дизайн-Агентство</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #FF3366;
+      --secondary: #6633FF;
+      --accent: #FF66FF;
+      --dark-bg: #0d0d0d;
+      --light-text: #fff;
+      --gray: #1e1e2a;
+    }
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: var(--dark-bg);
+      color: var(--light-text);
+      line-height: 1.6;
+    }
+    header {
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      background: radial-gradient(circle, #1e1e2a, #0d0d0d);
+    }
+    header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(to right, #fff, #FF66FF);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    header p {
+      max-width: 600px;
+      margin: 0 auto 2rem;
+      font-size: 1.1rem;
+      color: #ccc;
+    }
+    .cta {
+      background: #fff;
+      color: #000;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: 0.3s;
+    }
+    .cta:hover {
+      background: var(--accent);
+      color: white;
+    }
+    .section {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .services h2,
+    .metrics h2,
+    .clients h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+    }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .service-card {
+      background: var(--gray);
+      padding: 2rem;
+      border-radius: 15px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .service-card:hover {
+      transform: translateY(-5px);
+    }
+    .service-card i {
+      font-size: 2.5rem;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .service-card h3 {
+      margin-bottom: 1rem;
+    }
+    .metrics-grid {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 2rem;
+      text-align: center;
+      margin-top: 3rem;
+    }
+    .metric {
+      font-size: 1.2rem;
+    }
+    .clients {
+      text-align: center;
+    }
+    footer {
+      background: #050505;
+      text-align: center;
+      padding: 3rem 2rem;
+      margin-top: 4rem;
+    }
+    footer p {
+      color: #888;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="header-content">
-            <div class="logo">
-                <img src="https://i.imgur.com/WXAsPSh.png" alt="KinydipyGD Logo">
-                <h1>KINYDIPY GD</h1>
-            </div>
-            <p class="subtitle">Лучший приватный сервер Geometry Dash в России</p>
-            
-            <div class="stats">
-                <div class="stat-item">
-                    <i class="fas fa-users"></i>
-                    <span>300+ зарегистрированных игроков</span>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-star"></i>
-                    <span> Эксклюзивный сервер Geometry Dash от популярного ютубера</span>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-calendar-alt"></i>
-                    <span>Открыт с 23.03.2025</span>
-                </div>
-                <div class="stat-item">
-                    <i class="fas fa-code-branch"></i>
-                    <span>Версия 2.2</span>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <div class="container">
-        <section>
-            <div class="server-info">
-                <h2>🚀 Официальный сервер kinydipy</h2>
-                <p>Добро пожаловать на лучший приватный сервер Geometry Dash в России! kinydipy - это уникальный проект, который сочетает в себе все лучшее из оригинальной игры и добавляет множество эксклюзивных возможностей.</p>
-                <p>Наш сервер активно развивается и не будет заброшен - мы гарантируем постоянные обновления и поддержку для наших игроков. Присоединяйтесь к растущему сообществу и откройте для себя новый уровень игры!</p>
-            </div>
-        </section>
-
-        <section>
-            <h2>🔥 Наши преимущества</h2>
-            <div class="features">
-                <div class="feature">
-                    <i class="fas fa-trophy"></i>
-                    <h3>Эксклюзивные уровни</h3>
-                    <p>Более 150 уникальных уровней, включая демоны и insane-карты, созданные специально для нашего сервера топовыми креаторами</p>
-                </div>
-                <div class="feature">
-                    <i class="fas fa-user-astronaut"></i>
-                    <h3>Кастомные скины</h3>
-                    <p>Тысячи новых иконок, шаров, волн и эффектов для полной персонализации вашего куба</p>
-                </div>
-                <div class="feature">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>Система рейтингов</h3>
-                    <p>Соревнуйтесь с другими игроками и поднимайтесь в топе нашего сервера</p>
-                </div>
-                <div class="feature">
-                    <i class="fas fa-edit"></i>
-                    <h3>Улучшенный редактор</h3>
-                    <p>Новые объекты, триггеры и возможности для создания уникальных уровней</p>
-                </div>
-                <div class="feature">
-                    <i class="fas fa-bolt"></i>
-                    <h3>Максимальная оптимизация</h3>
-                    <p>Высокая производительность даже на слабых устройствах</p>
-                </div>
-                <div class="feature">
-                    <i class="fas fa-headset"></i>
-                    <h3>Круглосуточная поддержка</h3>
-                    <p>Активное сообщество и быстрая помощь от администрации</p>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2>🏆 Топ игроков</h2>
-            <p>Наши лучшие игроки, которые достигли невероятных результатов на сервере</p>
-            
-            <div class="leaderboard">
-                <div class="leader">
-                    <div class="leader-image">
-                        <img src="https://i.imgur.com/lcTjD9i.jpeg" alt="Топ 1 игрок">
-                        <div class="leader-badge">1</div>
-                    </div>
-                    <div class="leader-info">
-                        <h3>ProGamer</h3>
-                        <div class="leader-position">Legendary Creator</div>
-                        <p>Автор 20+ демон-уровней на сервере. Чемпион всех турниров.</p>
-                        <div class="leader-stats">
-                            <div class="leader-stat">
-                                <i class="fas fa-star"></i>
-                                <span>5000+ очков</span>
-                            </div>
-                            <div class="leader-stat">
-                                <i class="fas fa-medal"></i>
-                                <span>15 наград</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="leader">
-                    <div class="leader-image">
-                        <img src="https://i.imgur.com/jzutlC9.jpeg" alt="Топ 2 игрок">
-                        <div class="leader-badge">2</div>
-                    </div>
-                    <div class="leader-info">
-                        <h3>SpeedRunner</h3>
-                        <div class="leader-position">Extreme Demon Slayer</div>
-                        <p>Прошел все extreme-демоны на сервере. Рекордсмен по скорости.</p>
-                        <div class="leader-stats">
-                            <div class="leader-stat">
-                                <i class="fas fa-star"></i>
-                                <span>4500+ очков</span>
-                            </div>
-                            <div class="leader-stat">
-                                <i class="fas fa-medal"></i>
-                                <span>12 наград</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="leader">
-                    <div class="leader-image">
-                        <img src="https://i.imgur.com/SKh9m4N.jpeg" alt="Топ 3 игрок">
-                        <div class="leader-badge">3</div>
-                    </div>
-                    <div class="leader-info">
-                        <h3>CreativeMind</h3>
-                        <div class="leader-position">Top Designer</div>
-                        <p>Создатель самых красивых уровней на сервере. Мастер дизайна.</p>
-                        <div class="leader-stats">
-                            <div class="leader-stat">
-                                <i class="fas fa-star"></i>
-                                <span>4000+ очков</span>
-                            </div>
-                            <div class="leader-stat">
-                                <i class="fas fa-medal"></i>
-                                <span>10 наград</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2>🎥 Наш официальный ютубер</h2>
-            <div class="youtuber">
-                <div class="youtuber-avatar">
-                    <img src="https://i.imgur.com/Qym16QN.png" alt="Kinydipy">
-                </div>
-                <div class="youtuber-info">
-                    <h3>kinydipy</h3>
-                    <p>Официальный ютубер и лицо сервера kinydipy. На его канале вы найдете геймплей с нашего сервера, прохождения сложных уровней, обзоры новых обновлений и многое другое.</p>
-                    
-                    <div class="youtuber-stats">
-                        <div class="youtuber-stat">
-                            <i class="fab fa-youtube"></i>
-                            <span>7500+ подписчиков</span>
-                        </div>
-                        <div class="youtuber-stat">
-                            <i class="fas fa-video"></i>
-                            <span>150+ видео</span>
-                        </div>
-                        <div class="youtuber-stat">
-                            <i class="fas fa-heart"></i>
-                            <span>Фаворит сообщества</span>
-                        </div>
-                    </div>
-                    
-                    <div class="btn-group">
-                        <a href="https://www.youtube.com/@kinydipys" class="btn btn-accent shine-btn">
-                            <i class="fab fa-youtube"></i> YouTube канал
-                        </a>
-                        <a href="https://t.me/kinydipys" class="btn btn-secondary">
-                            <i class="fab fa-telegram"></i> Telegram
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h2>📥 Игровой сервер от ютубера kinydipy - доступен для скачивания</h2>
-            <p>Выберите версию для вашего устройства и присоединяйтесь к нашему сообществу прямо сейчас!</p>
-            
-            <div class="btn-group">
-                <a href="https://disk.yandex.ru/d/XSJfBRZLltHxXA" class="btn btn-primary shine-btn">
-                    <i class="fab fa-android"></i> Скачать для Android
-                </a>
-                <a href="https://disk.yandex.ru/d/mXLAs8jG8H36yQ" class="btn btn-primary shine-btn">
-                    <i class="fas fa-desktop"></i> Скачать для PC
-                </a>
-            </div>
-            
-            <p><small>Версия 2.2 | Последнее обновление: 26.04.2025</small></p>
-        </section>
-
-        <section>
-            <h2>📜 Правила сервера</h2>
-            <div class="rules">
-                <p>Для поддержания дружелюбной атмосферы и честной игры на нашем сервере действуют следующие правила:</p>
-                
-                <div class="rules-list">
-                    <div class="rule-item">
-                        <h4><i class="fas fa-ban"></i> Запрет читов</h4>
-                        <p>Использование любых программ, модифицирующих игровой процесс (speedhack, aimbot, noclip и т.д.) строго запрещено и карается перманентным баном.</p>
-                    </div>
-                    <div class="rule-item">
-                        <h4><i class="fas fa-handshake"></i> Уважение к другим</h4>
-                        <p>Запрещены оскорбления, дискриминация, троллинг и любой другой токсичный поведение в чате и комментариях.</p>
-                    </div>
-                    <div class="rule-item">
-                        <h4><i class="fas fa-gavel"></i> Честная игра</h4>
-                        <p>Запрещено использование багов для получения преимущества. Об обнаруженных багах необходимо сообщать администрации.</p>
-                    </div>
-                </div>
-                
-                <div class="btn-group" style="margin-top: 2rem;">
-                    <a href="https://telegra.ph/rules-04-26-67" class="btn btn-secondary">
-                        <i class="fas fa-book"></i> Полные правила
-                    </a>
-                    <a href="https://discord.gg/s7gDuzUZVX" class="btn btn-accent">
-                        <i class="fab fa-discord"></i> Наш Discord
-                    </a>
-                </div>
-            </div>
-        </section>
+  <header>
+    <h1>Web3 Дизайн-Агентство</h1>
+    <p>Стиль и технологии будущего: UI/UX, NFT, анимации и брендинг нового поколения.</p>
+    <a href="#services" class="cta">Начать</a>
+  </header>  <section class="section metrics">
+    <h2>Наша статистика</h2>
+    <div class="metrics-grid">
+      <div class="metric">5M+<br>Клиентов</div>
+      <div class="metric">450M+<br>Охват</div>
+      <div class="metric">22%<br>Доход</div>
+      <div class="metric">8.03%<br>Интерес</div>
     </div>
-
-    <footer>
-        <div class="footer-content">
-            <div class="footer-logo">
-                <img src="https://i.imgur.com/WXAsPSh.png" alt="KinydipyGD Logo">
-                <h3>KINYDIPY GD</h3>
-            </div>
-            <p class="footer-slogan">Лучший приватный сервер Geometry Dash в России с 2025 года</p>
-            
-            <div class="social-links">
-                <a href="https://discord.gg/s7gDuzUZVX" class="social-link">
-                    <i class="fab fa-discord"></i>
-                </a>
-                <a href="https://t.me/kinydipys" class="social-link">
-                    <i class="fab fa-telegram"></i>
-                </a>
-                <a href="https://www.youtube.com/@kinydipys" class="social-link">
-                    <i class="fab fa-youtube"></i>
-                </a>
-                <a href="https://vk.com" class="social-link">
-                    <i class="fab fa-vk"></i>
-                </a>
-            </div>
-            
-            <div class="copyright">
-                <p>© 2025 kinydipy. Все права защищены.</p>
+  </section>  <section class="section services" id="services">
+    <h2>Наши Услуги</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <i class="fas fa-laptop-code"></i>
+        <h3>UI/UX дизайн</h3>
+        <p>Современные интерфейсы для веба и приложений с фокусом на пользователя.</p>
+      </div>
+      <div class="service-card">
+        <i class="fas fa-cubes"></i>
+        <h3>Web3 брендинг</h3>
+        <p>Создание айдентики для NFT, DAO и крипто-платформ.</p>
+      </div>
+<div class="service-card">
+        <i class="fas fa-chart-line"></i>
+        <h3>Дашборды</h3>
+        <p>Интерактивные панели с данными и аналитикой в реальном времени.</p>
+      </div>
+      <div class="service-card">
+        <i class="fas fa-image"></i>
+        <h3>3D и анимации</h3>
+        <p>Микроанимации, интерактивные сцены и визуальные эффекты.</p>
+      </div>
+    </div>
+  </section>  <section class="section clients">
+    <h2>Довольные клиенты</h2>
+    <p>Нам доверяют ведущие Web3 стартапы и крипто-платформы.</p>
+  </section>  <footer>
+    <p>&copy; 2025 Web3 Agency. Все права защищены.</p>
+  </footer>
+</body>
+</html>
